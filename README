@@ -1,0 +1,43 @@
+### GIT ###
+git init
+git add *
+git commit -m "first commit"
+git remote add origin https://github.com/eabeda/testDirectFb.git
+git push -u origin master
+
+#local config in local repos
+git config user.name "eabeda"
+git config user.email "elyes.abeda@gmail.com"
+
+### ECLIPSE ###
+#CONFIG OPTIONS
+Project->proprities->Autotools->Configure Settings->configure->Directory specifiers->prefix : /tmp, /usr or /usr/local
+Project->proprities->Autotools->Configure Settings->configure->Advanced->Additional command-line options: --enable-tests --enable-debug --enable-memmng
+Project->proprities->Autotools->Configure Settings->configure->Environment variables->New: PKG_CONFIG_PATH="/tmp/lib/pkgconfig"
+#BUILD OPTIONS
+Project->proprities->C/C++ Build->Behavior->Build : all install
+Project->proprities->C/C++ Build->Behavior->Clean : clean
+#CPPCHECK
+Project->proprities->C/C++ Build->Behavior->Build : check all install
+
+### CLEAN ###
+rm -rf Build aclocal.m4 autom4te.cache compile config.guess config.log config.status config.sub configure depcomp install-sh Makefile missing Makefile.in src/Makefile src/.deps/ src/Makefile.in
+
+### EXECUTION ###
+$ /etc/ld.so.conf.d/mylibs.conf
+# My Libs
+/tmp/lib
+$ sudo ldconfig -v
+$ sudo ldconfig -p
+
+$ export LD_LIBRARY_PATH=/tmp/lib/
+$ export LD_LIBRARY_PATH=/usr/local/lib
+OR
+$ export LD_LIBRARY_PATH=Downloads/lib/src/.libs/
+
+LD_LIBRARY_PATH="/tmp/rootfs/lib" testDirectFb_LOG_LEVEL=7 testDirectFb_LOG_BACKEND=2 testDirectFb_LOG_COLOR=6 ./Build/src/testDirectFb
+
+### INSTALL ###
+PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --cflags --libs directfb
+PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --modversion directfb
+
