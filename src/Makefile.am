@@ -29,7 +29,6 @@ AM_CFLAGS =\
 
 testDirectFb_PROGRAMS = testDirectFb
 testDirectFbdir = $(prefix)/bin
-
 testDirectFb_SOURCES = $(top_srcdir)/src/testDirectFb.c
 testDirectFb_CFLAGS = $(libLog_CFLAGS) $(libDFB_CFLAGS)
 testDirectFb_LDFLAGS = $(libLog_LIBS) $(libDFB_LIBS)
