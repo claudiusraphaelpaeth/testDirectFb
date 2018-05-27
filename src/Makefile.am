@@ -22,7 +22,9 @@ AM_CXXFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\"
 
 AM_CFLAGS =\
+	 -W\
 	 -Wall\
+	 -Werror\
 	 -g
 
 testDirectFb_PROGRAMS = testDirectFb
