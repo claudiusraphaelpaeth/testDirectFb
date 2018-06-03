@@ -44,6 +44,8 @@ AC_CHECK_HEADERS([stdlib.h])
 AC_CHECK_LIB([])
 # Checks for library functions
 AC_CHECK_FUNCS()
+# Checks for typedefs, structures, and compiler characteristics
+AC_TYPE_SIZE_T
 
 #############################################
 ################# OPTIONS ###################

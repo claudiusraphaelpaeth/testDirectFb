@@ -1,3 +1,4 @@
+
 ### GIT ###
 git init
 git add *
@@ -10,34 +11,72 @@ git config user.name "eabeda"
 git config user.email "elyes.abeda@gmail.com"
 
 ### ECLIPSE ###
+New->Convert a C/C++ Project (Adds C/C++ Nature)->C project/C++ project
+New->Convert a C/C++ Project (Adds C/C++ Nature)->C project->GNU Autotools->GNU Autotools Toolchain
 #CONFIG OPTIONS
-Project->proprities->Autotools->Configure Settings->configure->Directory specifiers->prefix : /tmp, /usr or /usr/local
-Project->proprities->Autotools->Configure Settings->configure->Advanced->Additional command-line options: --enable-tests --enable-debug --enable-memmng
-Project->proprities->Autotools->Configure Settings->configure->Environment variables->New: PKG_CONFIG_PATH="/tmp/lib/pkgconfig"
+Project->Proprities->Autotools->Configure Settings->configure->Directory specifiers->prefix: /tmp, /usr, /tmp/rootfs or /usr/local
+Project->Proprities->Autotools->Configure Settings->configure->Advanced->Additional command-line options: --enable-tests --enable-debug
+Project->Proprities->Autotools->Configure Settings->configure->Environment variables->New: PKG_CONFIG_PATH="/tmp/rootfs/lib/pkgconfig"
 #BUILD OPTIONS
-Project->proprities->C/C++ Build->Behavior->Build : all install
-Project->proprities->C/C++ Build->Behavior->Clean : clean
+Project->Proprities->C/C++ Build->Builder Settings: make -j
+Project->Proprities->C/C++ Build->Build location->Build directory: ${workspace_loc:/Project}/Build/
+Project->Proprities->C/C++ Build->Behavior->Build: all install
+Project->Proprities->C/C++ Build->Behavior->Clean: clean
 #CPPCHECK
-Project->proprities->C/C++ Build->Behavior->Build : check all install
+Project->Proprities->C/C++ Build->Behavior->Build: check all install
+#INDEX
+Project->Proprities->C/C++ General->Paths and Symbols->Includes: /tmp/rootfs/include
+## COMMANDS ##
+Project->Index->Rebuild
+Project->Invoke Autotools->Invoke Autoreconf: -fvi
+Project->Reconfigure Project
+Project->Build Project (Ctrl+S | Ctrl+B)
+Project->Clean Project
+Project->Team->Switch To->New Branch...
+Project->Team->Pull
+Project->Team->Commit (Ctrl+ALtGr+#)
+Project->Team->Push to Upstream
+Project->Team->Remote->Push...
+Project->Team->Advanced->Tag...
+Project->Team->Remote->Push Tags...
+Project->Team->Merge
+Project->Team->Show in History
+Project->Team->Show in History->Checkout
 
 ### CLEAN ###
-rm -rf Build aclocal.m4 autom4te.cache compile config.guess config.log config.status config.sub configure depcomp install-sh Makefile missing Makefile.in src/Makefile src/.deps/ src/Makefile.in
+cd Build && make distclean && cd -
+autoreconf -fvi
 
 ### EXECUTION ###
 $ /etc/ld.so.conf.d/mylibs.conf
 # My Libs
-/tmp/lib
+/tmp/rootfs/lib
 $ sudo ldconfig -v
 $ sudo ldconfig -p
-
-$ export LD_LIBRARY_PATH=/tmp/lib/
-$ export LD_LIBRARY_PATH=/usr/local/lib
 OR
-$ export LD_LIBRARY_PATH=Downloads/lib/src/.libs/
+$ export LD_LIBRARY_PATH=/tmp/rootfs/lib
+$ export LD_LIBRARY_PATH=/usr/local/lib
+
+### GDB ###
+gdb .libs/Binary
+OR
+gdb /tmp/rootfs/bin/Binary
+(gdb) run (parameters)
+(gdb) bt
+(gdb) quit
+Quit anyway? (y or n) y
 
 LD_LIBRARY_PATH="/tmp/rootfs/lib" testDirectFb_LOG_LEVEL=7 testDirectFb_LOG_BACKEND=2 testDirectFb_LOG_COLOR=6 ./Build/src/testDirectFb
 
 ### INSTALL ###
-PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --cflags --libs directfb
-PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --modversion directfb
+PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --cflags --libs libLog
+PKG_CONFIG_PATH="/tmp/lib/pkgconfig" pkg-config --modversion libLog
 
+### APT ###
+sudo apt install libdirectfb-dev
+dpkg -L libdirectfb-dev
+pkg-config --modversion directfb
+pkg-config --modversion direct
+pkg-config --modversion fusion
+
+### DOC ###

@@ -16,16 +16,7 @@
 #* with this program.  If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
-AM_CXXFLAGS = \
-	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
-	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
-	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\"
-
-AM_CFLAGS =\
-	 -W\
-	 -Wall\
-	 -Werror\
-	 -g
+AM_CFLAGS = -Wall -g
 
 testDirectFb_PROGRAMS = testDirectFb
 testDirectFbdir = $(prefix)/bin
@@ -38,7 +29,7 @@ check-local:
 # It should continue if there are cppcheck errors
 ERR_EXITCODE = 0
 # Check options (all for all options)
-CHECK_OPTS = style,performance,portability,information,missingInclude
+CHECK_OPTS = warning,style,performance,portability,information,missingInclude,unusedFunction
 # Include an extra check for the source code.
 if HAVE_CPPCHECK
 	@echo "--- cppcheck enabled ---"
@@ -46,7 +37,7 @@ if HAVE_CPPCHECK
 	@cppcheck --version
 	@cppcheck -q --force --enable=$(CHECK_OPTS) --std=posix --platform=unix32 \
 	--inline-suppr --suppress=variableScope --error-exitcode=$(ERR_EXITCODE) \
-	-I$(top_srcdir)/inc -I$(top_srcdir)/test $(testDirectFb_SOURCES) \
+	$(testDirectFb_CFLAGS) $(testDirectFb_SOURCES) \
 	&& echo "--- cppcheck passed ---" \
 	|| (echo "--- cppcheck failed! ---" && exit 1)
 else
